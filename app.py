@@ -4,7 +4,7 @@ import requests
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-# --- دالة إرسال البيانات بقناع المتصفح لتخطي قيود الأمان ---
+# --- دالة إرسال البيانات المحدثة والمحمية لتخطي قيود الأمان ---
 def log_to_google_sheets(lang_used, support_type, user_word):
     form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DcAt3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/formResponse"
     
@@ -41,23 +41,17 @@ if lang == "العربية":
     txt_warning = "⚠️ الرجاء كتابة فكرة أو كلمة أولاً!"
     txt_spinner = "⏳ جاري هندسة الأمر وتحسينه بالصور وتسجيل البيانات مجتمعياً..."
     txt_success = "✨ تم توليد الأمر الاحترافي بنجاح وتوثيقه حياً!"
-    txt_result = "📋 الأمر الجاهز للنسخ (ضعيه in ChatGPT):"
+    txt_result = "📋 الأمر الجاهز للنسخ (ضعيه في ChatGPT):"
     txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً وصور تناسبك!"
     txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حياً مع جداول بيانات قوقل."
     
     def get_prompt(support, prompt_text):
         if support == "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸":
-            return (
-                f"تصرف كمعلم تربية خاصة صبور جداً ويستخدم الوسائل البصرية. أريد أن أتعلم عن موضوع '{prompt_text}'. "
-                f"أولاً: قم بتوليد صورة دافئة، واضحة، وجميلة جداً تناسب موضوع '{prompt_text}' لتفهمني إياه بصرياً. "
-                f"ثانياً: اشرح لي الموضوع باللغة العربية مستخدماً جملاً قصيرة جداً (3 كلمات في الجملة كحد أقصى)، وكلمات سهلة ومبسطة للغاية، "
-                f"وقسم الشرح إلى 3 نقاط أساسية واضحة متبوعة برموز تعبيرية (Emojis) مناسبة للأطفال. تجنب تماماً النصوص الطويلة."
-            )
+            return f"""تصرف كمعلم تربية خاصة صبور جداً ويستخدم الوسائل البصرية. أريد أن أتعلم عن موضوع '{prompt_text}'.
+أولاً: قم بتوليد صورة دافئة، واضحة، وجميلة جداً تناسب موضوع '{prompt_text}' لتفهمني إياه بصرياً.
+ثانياً: اشرح لي الموضوع باللغة العربية مستخدماً جملاً قصيرة جداً (3 كلمات في الجملة كحد أقصى)، وكلمات سهلة ومبسطة للغاية، وقسم الشرح إلى 3 نقاط أساسية واضحة متبوعة برموز تعبيرية (Emojis) مناسبة للأطفال. تجنب تماماً النصوص الطويلة."""
         else:
-            return (
-                f"تصرف كمعلم لغة محترف. يرجى تقديم دليل شامل ودرس منظم حول موضوع '{prompt_text}' "
-                f"باللغة العربية، يحتوي على مقدمة، ونقاط رئيسية، وخاتمة واضحة لمساعدتي في الفهم والاستيعاب."
-            )
+            return f"""تصرف كمعلم لغة محترف. يرجى تقديم دليل شامل ودرس منظم حول موضوع '{prompt_text}' باللغة العربية، يحتوي على مقدمة، ونقاط رئيسية، وخاتمة واضحة لمساعدتي في الفهم والاستيعاب."""
 
 else:
     txt_title = "🤖 Promptify-Ed"
@@ -79,7 +73,37 @@ else:
     
     def get_prompt(support, prompt_text):
         if support == "Special Education - Ultra Simplified with Visual Images 📸":
-            return (
-                f"Act as a highly patient special education teacher who uses visual support. I want to learn about '{prompt_text}'. "
-                f"First, generate a beautiful, simple, and clear image representing '{prompt_text}' to help me understand visually. "
-                f"Second, explain the topic to me in English using ultra-short
+            return f"""Act as a highly patient special education teacher who uses visual support. I want to learn about '{prompt_text}'.
+First, generate a beautiful, simple, and clear image representing '{prompt_text}' to help me understand visually.
+Second, explain the topic to me in English using ultra-short sentences (max 3 words per sentence), very basic vocabulary, and break the lesson into 3 clear points with fun emojis. Avoid any complex paragraphs or difficult words."""
+        else:
+            return f"""Act as an expert English teacher. Please provide a comprehensive guide and structured lesson about '{prompt_text}' in English, including an introduction, main points, and a conclusion to help me practice my English."""
+
+# --- بناء واجهة التطبيق ---
+st.title(txt_title)
+st.write(txt_subtitle)
+
+user_prompt = st.text_area(txt_label, placeholder=txt_placeholder)
+support_type = st.selectbox(txt_select, options_support)
+
+st.markdown("---")
+
+if st.button(txt_button):
+    if user_prompt.strip() == "":
+        st.warning(txt_warning)
+    else:
+        with st.spinner(txt_spinner):
+            
+            # 1. توليد الأمر الذكي والآمن من الأخطاء
+            optimized_code = get_prompt(support_type, user_prompt)
+            
+            # 2. إرسال البيانات المباشر إلى الشيت الشخصي
+            log_to_google_sheets(lang, support_type, user_prompt)
+
+            st.success(txt_success)
+            st.subheader(txt_result)
+            st.code(optimized_code)
+            st.info(txt_info)
+
+st.markdown("---")
+st.caption(txt_caption)
