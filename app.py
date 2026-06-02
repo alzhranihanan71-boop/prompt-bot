@@ -3,10 +3,10 @@ import streamlit as st
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-# 1. إضافة زر تحويل اللغة في أعلى اليمين
+# 1. إضافة زر تحويل اللغة في أعلى الصفحة
 lang = st.radio("🌐 Choose Language / اختر اللغة:", ["العربية", "English"], horizontal=True)
 
-# 2. قاموس النصوص للتحويل بين اللغتين تلقائياً
+# 2. قاموس النصوص للتحويل بين اللغتين في الواجهة
 if lang == "العربية":
     txt_title = "🤖 Promptify-Ed | برومبتيفاي-إد"
     txt_subtitle = "اكتب فكرتك البسيطة، وسيقوم البوت بتحويلها إلى أمر ذكي واحترافي فوراً!"
@@ -42,7 +42,7 @@ else:
     txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson tailored for you!"
     txt_caption = "🔒 A free community application designed to serve all learners, integrated with Google Sheets."
 
-# --- بناء واجهة التطبيق بناءً على اللغة المختارة ---
+# --- بناء واجهة التطبيق ---
 st.title(txt_title)
 st.write(txt_subtitle)
 
@@ -60,15 +60,24 @@ if st.button(txt_button):
     else:
         with st.spinner(txt_spinner):
             
-            # هندسة الأوامر الذكية (تظل بالإنجليزية لأنها موجهة للـ AI)
+            # حل المشكلة: إجبار الذكاء الاصطناعي على ترجمة الكلمة المدخلة أولاً إذا كانت عربية
             if support_type in ["دعم التربية الفكرية - تبسيط مفرط", "Special Education - Ultra Simplified Support"]:
-                optimized_code = f"Act as a highly patient special education teacher. I want to learn about '{user_prompt}'. Explain it to me in English using ultra-short sentences, very basic vocabulary, friendly words, and break the topic into 3 simple bullet points. Avoid any complex terms."
+                optimized_code = (
+                    f"First, translate the topic '{user_prompt}' into English if it is written in Arabic. "
+                    f"Then, act as a highly patient special education teacher and provide a lesson about this topic. "
+                    f"Explain it to me in English using ultra-short sentences, very basic vocabulary, friendly words, "
+                    f"and break the topic into 3 simple bullet points. Avoid any complex terms or difficult language."
+                )
             else:
-                optimized_code = f"Act as an expert English teacher. Please provide a comprehensive guide and structured lesson about '{user_prompt}' with an introduction, main points, and a conclusion to help me practice my English."
+                optimized_code = (
+                    f"First, translate the topic '{user_prompt}' into English if it is written in Arabic. "
+                    f"Then, act as an expert English teacher and provide a comprehensive guide and structured lesson about this topic "
+                    f"in English, including an introduction, main points, and a conclusion to help me practice my English."
+                )
 
             st.success(txt_success)
             
-            # عرض النتيجة النهائية لتقوم الطالبة بنسخها
+            # عرض النتيجة النهائية النظيفة للنسخ
             st.subheader(txt_result)
             st.code(optimized_code)
             
