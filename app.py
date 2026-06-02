@@ -115,4 +115,4 @@ if st.button(txt_button):
             st.info(txt_info)
 
 st.markdown("---")
-st.caption(txt_caption
+st.caption(txt_caption)
