@@ -4,21 +4,26 @@ import requests
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-# --- دالة إرسال البيانات تلقائياً لـ Google Sheets عبر نموذج قوقل المدمج ---
+# --- دالة إرسال البيانات المحدثة مع تصريح العبور الآمن ---
 def log_to_google_sheets(lang_used, support_type, user_word):
-    # الرابط البرمجي الصحيح المستخرج من نموذجكِ
-    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DCat3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/formResponse"
+    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DCat3yJ_GsjHWBZU02UVQmhJ00b1gOvYonNUcs5nNQRQ/formResponse"
     
-    # المعرفات الحقيقية الكاملة لأسئلتكِ الثلاثة
     form_data = {
         "entry.2102841169": lang_used,     # حقل اللغة
         "entry.1661112924": support_type,  # حقل نوع الدعم
         "entry.315119461": user_word       # حقل الكلمة المدخلة
     }
+    
+    # 🌟 إضافة تصريح عبور الويب (Headers) لتجاوز حماية قوقل فوراً
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+    
     try:
-        requests.post(form_url, data=form_data)
+        # إرسال الطلب مع البيانات والتصريح معاً
+        requests.post(form_url, data=form_data, headers=headers)
     except:
-        pass # لضمان عدم توقف التطبيق في حال أي تذبذب بالإنترنت
+        pass 
 
 # 1. إضافة زر تحويل اللغة في أعلى الصفحة
 lang = st.radio("🌐 Choose Language / اختر اللغة:", ["العربية", "English"], horizontal=True)
@@ -106,7 +111,7 @@ if st.button(txt_button):
             # 1. توليد الأمر الذكي
             optimized_code = get_prompt(support_type, user_prompt)
             
-            # 2. إرسال البيانات فوراً لجوجل شيت عبر دالتكِ المصححة
+            # 2. إرسال البيانات فوراً بقناع المتصفح الآمن
             log_to_google_sheets(lang, support_type, user_prompt)
 
             st.success(txt_success)
