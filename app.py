@@ -4,19 +4,16 @@ import requests
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-# --- دالة إرسال البيانات المضمونة والمصححة بقناع المتصفح الآمن ---
+# --- دالة إرسال البيانات بقناع المتصفح لتخطي قيود الأمان ---
 def log_to_google_sheets(lang_used, support_type, user_word):
-    # تم توجيه الرابط إلى نموذج الاستجابة الرسمي الخاص بحسابكِ الشخصي
     form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DcAt3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/formResponse"
     
-    # المعرفات الذكية المقابلة للأسئلة الثلاثة (اللغة، نوع الدعم، الكلمة)
     form_data = {
         "entry.2102841169": lang_used,     # حقل لغة الواجهة
         "entry.1661112924": support_type,  # حقل نوع الدعم التعليمي
         "entry.315119461": user_word       # حقل الكلمة/الفكرة المدخلة
     }
     
-    # رأس الطلب لإجبار السيرفر على تمرير البيانات كمتصفح طبيعي وبدون قيود دخـول
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
@@ -42,11 +39,11 @@ if lang == "العربية":
     ]
     txt_button = "🚀 تحسين الأمر وتوليده"
     txt_warning = "⚠️ الرجاء كتابة فكرة أو كلمة أولاً!"
-    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه بصرياً وتوثيقه في البيانات حياً..."
-    txt_success = "✨ تم توليد الأمر الاحترافي بنجاح وتوثيقه في جدول البيانات!"
-    txt_result = "📋 الأمر الجاهز للنسخ (ضعيه في ChatGPT):"
+    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه بالصور وتسجيل البيانات مجتمعياً..."
+    txt_success = "✨ تم توليد الأمر الاحترافي بنجاح وتوثيقه حياً!"
+    txt_result = "📋 الأمر الجاهز للنسخ (ضعيه in ChatGPT):"
     txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً وصور تناسبك!"
-    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حياً مع جداول بيانات قوقل لجمع الإحصائيات."
+    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حياً مع جداول بيانات قوقل."
     
     def get_prompt(support, prompt_text):
         if support == "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸":
@@ -85,10 +82,4 @@ else:
             return (
                 f"Act as a highly patient special education teacher who uses visual support. I want to learn about '{prompt_text}'. "
                 f"First, generate a beautiful, simple, and clear image representing '{prompt_text}' to help me understand visually. "
-                f"Second, explain the topic to me in English using ultra-short sentences (max 3 words per sentence), very basic vocabulary, "
-                f"and break the lesson into 3 clear points with fun emojis. Avoid any complex paragraphs or difficult words."
-            )
-        else:
-            return (
-                f"Act as an expert English teacher. Please provide a comprehensive guide and structured lesson about '{prompt_text}' "
-                f"in English, including an introduction, main points,
+                f"Second, explain the topic to me in English using ultra-short
