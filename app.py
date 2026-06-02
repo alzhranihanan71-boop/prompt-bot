@@ -4,21 +4,21 @@ import requests
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-# --- دالة برمجية لإرسال البيانات تلقائياً لـ Google Sheets عبر نموذج مخفي ---
+# --- دالة إرسال البيانات تلقائياً لـ Google Sheets عبر نموذج قوقل المدمج ---
 def log_to_google_sheets(lang_used, support_type, user_word):
-    # ⚠️ استبدلي هذا الرابط برابط الـ Form الخاص بكِ لاحقاً ليصب في الـ Sheets مباشرة
-    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DcAt3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/viewform?usp=pp_url&entry.2102841169=1&entry.1661112924=2&entry.315119461=3"
+    # الرابط البرمجي الصحيح المستخرج من نموذجكِ
+    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DCat3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/formResponse"
     
-    # المعرفات الخاصة بالأسئلة داخل النموذج
+    # المعرفات الحقيقية الكاملة لأسئلتكِ الثلاثة
     form_data = {
-        "entry.1": lang_used,     # معرف حقل اللغة
-        "entry.2": support_type,  # معرف حقل نوع الدعم
-        "entry.3": user_word      # معرف حقل الكلمة المدخلة
+        "entry.2102841169": lang_used,     # حقل اللغة
+        "entry.1661112924": support_type,  # حقل نوع الدعم
+        "entry.315119461": user_word       # حقل الكلمة المدخلة
     }
     try:
         requests.post(form_url, data=form_data)
     except:
-        pass # لضمان عدم توقف التطبيق في حال انقطاع الإنترنت
+        pass # لضمان عدم توقف التطبيق في حال أي تذبذب بالإنترنت
 
 # 1. إضافة زر تحويل اللغة في أعلى الصفحة
 lang = st.radio("🌐 Choose Language / اختر اللغة:", ["العربية", "English"], horizontal=True)
@@ -36,11 +36,11 @@ if lang == "العربية":
     ]
     txt_button = "🚀 تحسين الأمر وتوليده"
     txt_warning = "⚠️ الرجاء كتابة فكرة أو كلمة أولاً!"
-    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه ببالصور وتسجيل البيانات..."
-    txt_success = "✨ تم توليد الأمر الاحترافي بنجاح!"
+    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه بالصور وتسجيل البيانات مجتمعياً..."
+    txt_success = "✨ تم توليد الأمر الاحترافي بنجاح وتوثيقه حياً!"
     txt_result = "📋 الأمر الجاهز للنسخ (ضعيه في ChatGPT):"
     txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً وصور تناسبك!"
-    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حيّاً مع جداول بيانات قوقل."
+    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حياً مع جداول بيانات قوقل."
     
     def get_prompt(support, prompt_text):
         if support == "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸":
@@ -69,7 +69,7 @@ else:
     txt_button = "🚀 Optimize and Generate Prompt"
     txt_warning = "⚠️ Please type an idea or a word first!"
     txt_spinner = "⏳ Engineering and optimizing your prompt with visuals..."
-    txt_success = "✨ Professional prompt generated successfully!"
+    txt_success = "✨ Professional prompt generated successfully and logged!"
     txt_result = "📋 Ready Prompt for ChatGPT (Copy below):"
     txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson tailored for you!"
     txt_caption = "🔒 A free community application designed to serve all learners, integrated with Google Sheets."
@@ -106,7 +106,7 @@ if st.button(txt_button):
             # 1. توليد الأمر الذكي
             optimized_code = get_prompt(support_type, user_prompt)
             
-            # 2. 🚀 السحر هنا: إرسال البيانات فوراً لجوجل شيت في الخلفية دون تأخير الطالبة
+            # 2. إرسال البيانات فوراً لجوجل شيت عبر دالتكِ المصححة
             log_to_google_sheets(lang, support_type, user_prompt)
 
             st.success(txt_success)
@@ -115,4 +115,4 @@ if st.button(txt_button):
             st.info(txt_info)
 
 st.markdown("---")
-st.caption(txt_caption)
+st.caption(txt_caption
