@@ -15,23 +15,24 @@ if lang == "العربية":
     txt_select = "💡 اختر نوع الدعم التعليمي:"
     options_support = [
         "التعليم العام",
-        "دعم التربية الفكرية - تبسيط مفرط"
+        "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸"
     ]
     txt_button = "🚀 تحسين الأمر وتوليده"
     txt_warning = "⚠️ الرجاء كتابة فكرة أو كلمة أولاً!"
-    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه..."
+    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه ببالصور..."
     txt_success = "✨ تم توليد الأمر الاحترافي بنجاح!"
     txt_result = "📋 الأمر الجاهز للنسخ (ضعيه في ChatGPT):"
-    txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً يناسبك!"
+    txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً وصور تناسبك!"
     txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت مع جداول بيانات قوقل."
     
-    # --- [الأوامر المحدثة باللغة العربية] ---
+    # --- [أوامر التربية الفكرية المحدثة لطلب الصور] ---
     def get_prompt(support, prompt_text):
-        if support == "دعم التربية الفكرية - تبسيط مفرط":
+        if support == "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸":
             return (
-                f"تصرف كمعلم تربية خاصة صبور جداً. أريد أن أتعلم عن موضوع '{prompt_text}'. "
-                f"اشرح لي الموضوع باللغة العربية مستخدماً جملاً قصيرة جداً، وكلمات سهلة ومبسطة للغاية، "
-                f"وقسم الشرح إلى 3 نقاط أساسية واضحة. تجنب تماماً أي مصطلحات معقدة أو كلمات صعبة."
+                f"تصرف كمعلم تربية خاصة صبور جداً ويستخدم الوسائل البصرية. أريد أن أتعلم عن موضوع '{prompt_text}'. "
+                f"أولاً: قم بتوليد صورة دافئة، واضحة، وجميلة جداً تناسب موضوع '{prompt_text}' لتفهمني إياه بصرياً. "
+                f"ثانياً: اشرح لي الموضوع باللغة العربية مستخدماً جملاً قصيرة جداً (3 كلمات في الجملة كحد أقصى)، وكلمات سهلة ومبسطة للغاية، "
+                f"وقسم الشرح إلى 3 نقاط أساسية واضحة متبوعة برموز تعبيرية (Emojis) مناسبة للأطفال. تجنب تماماً النصوص الطويلة."
             )
         else:
             return (
@@ -47,23 +48,24 @@ else:
     txt_select = "💡 Choose Educational Support Type:"
     options_support = [
         "General Learning",
-        "Special Education - Ultra Simplified Support"
+        "Special Education - Ultra Simplified with Visual Images 📸"
     ]
     txt_button = "🚀 Optimize and Generate Prompt"
     txt_warning = "⚠️ Please type an idea or a word first!"
-    txt_spinner = "⏳ Engineering and optimizing your prompt..."
+    txt_spinner = "⏳ Engineering and optimizing your prompt with visuals..."
     txt_success = "✨ Professional prompt generated successfully!"
     txt_result = "📋 Ready Prompt for ChatGPT (Copy below):"
-    txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson tailored for you!"
+    txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson with beautiful images!"
     txt_caption = "🔒 A free community application designed to serve all learners, integrated with Google Sheets."
     
-    # --- [الأوامر المحدثة باللغة الإنجليزية] ---
+    # --- [أوامر التربية الفكرية بالإنجليزية المحدثة لطلب الصور] ---
     def get_prompt(support, prompt_text):
-        if support == "Special Education - Ultra Simplified Support":
+        if support == "Special Education - Ultra Simplified with Visual Images 📸":
             return (
-                f"Act as a highly patient special education teacher. I want to learn about '{prompt_text}'. "
-                f"Explain it to me in English using ultra-short sentences, very basic vocabulary, friendly words, "
-                f"and break the topic into 3 simple bullet points. Avoid any complex terms or difficult language."
+                f"Act as a highly patient special education teacher who uses visual support. I want to learn about '{prompt_text}'. "
+                f"First, generate a beautiful, simple, and clear image representing '{prompt_text}' to help me understand visually. "
+                f"Second, explain the topic to me in English using ultra-short sentences (max 3 words per sentence), very basic vocabulary, "
+                f"and break the lesson into 3 clear points with fun emojis. Avoid any complex paragraphs or difficult words."
             )
         else:
             return (
