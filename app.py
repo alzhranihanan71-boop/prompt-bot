@@ -1,7 +1,24 @@
 import streamlit as st
+import requests
 
 # إعداد واجهة المستخدم
 st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
+
+# --- دالة برمجية لإرسال البيانات تلقائياً لـ Google Sheets عبر نموذج مخفي ---
+def log_to_google_sheets(lang_used, support_type, user_word):
+    # ⚠️ استبدلي هذا الرابط برابط الـ Form الخاص بكِ لاحقاً ليصب في الـ Sheets مباشرة
+    form_url = "https://docs.google.com/forms/d/e/1FAIpQLSd0a0DcAt3yJ_GsjHWBZUO2UVQmhJ00b1gOvYonNUcs5nNQRQ/viewform?usp=pp_url&entry.2102841169=1&entry.1661112924=2&entry.315119461=3"
+    
+    # المعرفات الخاصة بالأسئلة داخل النموذج
+    form_data = {
+        "entry.1": lang_used,     # معرف حقل اللغة
+        "entry.2": support_type,  # معرف حقل نوع الدعم
+        "entry.3": user_word      # معرف حقل الكلمة المدخلة
+    }
+    try:
+        requests.post(form_url, data=form_data)
+    except:
+        pass # لضمان عدم توقف التطبيق في حال انقطاع الإنترنت
 
 # 1. إضافة زر تحويل اللغة في أعلى الصفحة
 lang = st.radio("🌐 Choose Language / اختر اللغة:", ["العربية", "English"], horizontal=True)
@@ -19,13 +36,12 @@ if lang == "العربية":
     ]
     txt_button = "🚀 تحسين الأمر وتوليده"
     txt_warning = "⚠️ الرجاء كتابة فكرة أو كلمة أولاً!"
-    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه ببالصور..."
+    txt_spinner = "⏳ جاري هندسة الأمر وتحسينه ببالصور وتسجيل البيانات..."
     txt_success = "✨ تم توليد الأمر الاحترافي بنجاح!"
     txt_result = "📋 الأمر الجاهز للنسخ (ضعيه في ChatGPT):"
     txt_info = "💡 نصيحة ذكية: انسخي الأمر أعلاه وضعي في ChatGPT أو Gemini للحصول على درس مبسط جداً وصور تناسبك!"
-    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت مع جداول بيانات قوقل."
+    txt_caption = "🔒 برنامج مجاني مجتمعي آمن لخدمة جميع فئات المجتمع ومؤتمت حيّاً مع جداول بيانات قوقل."
     
-    # --- [أوامر التربية الفكرية المحدثة لطلب الصور] ---
     def get_prompt(support, prompt_text):
         if support == "دعم التربية الفكرية - تبسيط مفرط مدعوم بالصور 📸":
             return (
@@ -55,10 +71,9 @@ else:
     txt_spinner = "⏳ Engineering and optimizing your prompt with visuals..."
     txt_success = "✨ Professional prompt generated successfully!"
     txt_result = "📋 Ready Prompt for ChatGPT (Copy below):"
-    txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson with beautiful images!"
+    txt_info = "💡 Smart Tip: Copy the prompt above and paste it into ChatGPT or Gemini to get an ultra-simple lesson tailored for you!"
     txt_caption = "🔒 A free community application designed to serve all learners, integrated with Google Sheets."
     
-    # --- [أوامر التربية الفكرية بالإنجليزية المحدثة لطلب الصور] ---
     def get_prompt(support, prompt_text):
         if support == "Special Education - Ultra Simplified with Visual Images 📸":
             return (
@@ -77,10 +92,7 @@ else:
 st.title(txt_title)
 st.write(txt_subtitle)
 
-# صندوق إدخال الفكرة
 user_prompt = st.text_area(txt_label, placeholder=txt_placeholder)
-
-# قائمة اختيار نوع الدعم
 support_type = st.selectbox(txt_select, options_support)
 
 st.markdown("---")
@@ -91,15 +103,15 @@ if st.button(txt_button):
     else:
         with st.spinner(txt_spinner):
             
-            # استدعاء الأمر المنسق باللغة الصحيحة تلقائياً
+            # 1. توليد الأمر الذكي
             optimized_code = get_prompt(support_type, user_prompt)
+            
+            # 2. 🚀 السحر هنا: إرسال البيانات فوراً لجوجل شيت في الخلفية دون تأخير الطالبة
+            log_to_google_sheets(lang, support_type, user_prompt)
 
             st.success(txt_success)
-            
-            # عرض النتيجة النهائية النظيفة
             st.subheader(txt_result)
             st.code(optimized_code)
-            
             st.info(txt_info)
 
 st.markdown("---")
