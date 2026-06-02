@@ -1,27 +1,46 @@
 import streamlit as st
 
 # إعداد واجهة المستخدم
-st.set_page_config(page_title="مطور الأوامر الذكي", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="Promptify-Ed", page_icon="🤖", layout="centered")
 
-st.title("🤖 مهندس الأوامر الآلي المجاني")
-st.write("اكتب أمرك العام والبسيط، وسيقوم البوت بتحويله إلى أمر احترافي ومحسن فوراً!")
+st.title("🤖 Promptify-Ed | برومبتيفاي-إد")
+st.write("اكتب فكرتك البسيطة، وسيقوم البوت بتحويلها إلى أمر ذكي واحترافي فوراً!")
 
-# صندوق إدخال الأمر العام من المستخدم
-user_prompt = st.text_area("اكتب أمرك العام هنا:", placeholder="مثال: اكتب لي مقال عن الذكاء الاصطناعي")
+# صندوق إدخال الفكرة العامة من المستخدم
+user_prompt = st.text_area("✍️ اكتب فكرتك هنا (مثال: عائلة، حيوانات، قصة):", placeholder="اكتب هنا...")
 
-if st.button("تحسين الأمر 🚀"):
-    if user_prompt.strip() == "":
-        st.warning("الرجاء كتابة أمر أولاً!")
-    else:
-        with st.spinner("جاري هندسة الأمر وتحسينه..."):
-            st.success("تم تحسين الأمر بنجاح!")
-            
-            # عرض النتيجة النهائية بشكل مباشر وبسيط لتجنب أخطاء السطور
-            st.subheader("🎯 الأمر المحسن النهائي للنسخ:")
-            st.code(f"تصرف كخبير متخصص، وقدم دليلاً شاملاً حول ({user_prompt}) بشكل منظم ومنسق على شكل نقاط واضحة، مع إضافة مقدمة مميزة وخاتمة استنتاجية تفيد القارئ.")
-            
-            st.markdown("---")
-            st.info("💡 **نصيحة ذكية:** انسخ الأمر أعلاه وضعه في ChatGPT أو Gemini للحصول على أفضل نتيجة!")
+# قائمة اختيار نوع الدعم (ميزة التربية الخاصة)
+support_type = st.selectbox(
+    "💡 اختر نوع الدعم التعليمي (Choose Support Type):",
+    [
+        "التعليم العام (General Learning)",
+        "دعم التربية الفكرية - تبسيط مفرط (Special Education - Ultra Simplified)"
+    ]
+)
 
 st.markdown("---")
-st.caption("برنامج مجاني لخدمة الطلاب والمعلمين.")
+
+if st.button("🚀 تحسين الأمر وتوليده"):
+    if user_prompt.strip() == "":
+        st.warning("⚠️ الرجاء كتابة فكرة أو كلمة أولاً!")
+    else:
+        with st.spinner("⏳ جاري هندسة الأمر وتحسينه..."):
+            
+            # منطق هندسة الأوامر بناءً على اختيار نوع التعليم
+            if support_type == "دعم التربية الفكرية - تبسيط مفرط (Special Education - Ultra Simplified)":
+                # أمر ذكي يجبر الذكاء الاصطناعي على التبسيط الشديد لطالبات فكري
+                optimized_code = f"Act as a highly patient special education teacher. I want to learn about '{user_prompt}'. Explain it to me in English using ultra-short sentences, very basic vocabulary, friendly words, and break the topic into 3 simple bullet points. Avoid any complex terms."
+            else:
+                # الأمر المخصص للتعليم العام
+                optimized_code = f"Act as an expert English teacher. Please provide a comprehensive guide and structured lesson about '{user_prompt}' with an introduction, main points, and a conclusion to help me practice my English."
+
+            st.success("✨ تم توليد الأمر الاحترافي بنجاح!")
+            
+            # عرض النتيجة النهائية لتقوم الطالبة بنسخها
+            st.subheader("📋 الأمر الجاهز للنسخ:")
+            st.code(optimized_code)
+            
+            st.info("💡 نصيحة ذكية: انسخ الأمر أعلاه وضعه في ChatGPT أو Gemini للحصول على درس مبسط جداً يناسبك!")
+
+st.markdown("---")
+st.caption("🔒 برنامج مجاني آمن ومفتوح المصدر لخدمة جميع فئات المجتمع ومؤتمت مع جداول بيانات قوقل.")
